@@ -1,0 +1,24 @@
+
+style {
+button {
+  background: #1e3a8a;
+  color: #fff;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+}
+
+<!-- داخل div.card، بعد از پاراگراف‌ها -->
+<button onclick="showMessage()">نمایش پیام</button>
+<p id="message"></p>
+
+<!-- قبل از بستن </body> -->
+<script>
+  function showMessage() {
+    document.getElementById("message").textContent =
+      "به برنامه خوش آمدید";
+  }
+</script>
