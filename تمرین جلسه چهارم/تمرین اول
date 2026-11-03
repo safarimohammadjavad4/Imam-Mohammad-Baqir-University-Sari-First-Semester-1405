@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>معرفی دانشجو</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      background-color: #eef4ff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+    h1 { font-size: 28px; color: #1e3a8a; }
+    p  { font-size: 18px; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>علی احمدی</h1>
+    <p>رشته تحصیلی: مهندسی کامپیوتر</p>
+    <p>دانشگاه ملی مهارت امام محمد باقر (ع) ساری</p>
+  </div>
+</body>
+</html>
