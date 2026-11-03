@@ -1,0 +1,192 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MyApp());
+
+class Student {
+  final String name;
+  final String studentId;
+  final String major;
+
+  const Student({
+    required this.name,
+    required this.studentId,
+    required this.major,
+  });
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
+}
+
+// صفحه ۱: صفحه اصلی
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Student Manager')),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.school, size: 80, color: Colors.indigo),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterStudentPage(),
+                  ),
+                );
+              },
+              child: const Text('Register New Student'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// صفحه ۲: ثبت دانشجو
+class RegisterStudentPage extends StatefulWidget {
+  const RegisterStudentPage({super.key});
+
+  @override
+  State<RegisterStudentPage> createState() => _RegisterStudentPageState();
+}
+
+class _RegisterStudentPageState extends State<RegisterStudentPage> {
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final idController = TextEditingController();
+  final majorController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    idController.dispose();
+    majorController.dispose();
+    super.dispose();
+  }
+
+  void save() {
+    if (_formKey.currentState!.validate()) {
+      final student = Student(
+        name: nameController.text.trim(),
+        studentId: idController.text.trim(),
+        major: majorController.text.trim(),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StudentDetailsPage(student: student),
+        ),
+      );
+    }
+  }
+
+  String? required(String? v, String label) =>
+      (v == null || v.trim().isEmpty) ? '$label is required' : null;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Register Student')),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Full Name',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) => required(v, 'Name'),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: idController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Student ID',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) => required(v, 'Student ID'),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: majorController,
+                decoration: const InputDecoration(
+                  labelText: 'Major',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (v) => required(v, 'Major'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(onPressed: save, child: const Text('Save')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// صفحه ۳: نمایش اطلاعات دانشجو
+class StudentDetailsPage extends StatelessWidget {
+  final Student student;
+
+  const StudentDetailsPage({super.key, required this.student});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Student Details')),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Name: ${student.name}',
+                    style: const TextStyle(fontSize: 20)),
+                const SizedBox(height: 8),
+                Text('Student ID: ${student.studentId}'),
+                Text('Major: ${student.major}'),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      (route) => false,
+                    );
+                  },
+                  child: const Text('Back to Home'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
