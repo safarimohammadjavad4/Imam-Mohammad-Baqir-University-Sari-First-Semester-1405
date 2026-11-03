@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدیریت دانشجویان</title>
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css">
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>مدیریت دانشجویان</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-input id="nameInput" label="نام دانشجو"
+                 label-placement="floating" fill="outline"></ion-input>
+
+      <ion-button id="addBtn" expand="block" class="ion-margin-top">
+        ثبت
+      </ion-button>
+
+      <ion-list id="studentList"></ion-list>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    const input = document.getElementById('nameInput');
+    const list = document.getElementById('studentList');
+
+    document.getElementById('addBtn').addEventListener('click', () => {
+      const name = (input.value || '').trim();
+      if (name === '') return;
+
+      const item = document.createElement('ion-item');
+      const label = document.createElement('ion-label');
+      label.textContent = name;
+      item.appendChild(label);
+      list.appendChild(item);
+
+      input.value = '';
+    });
+  </script>
+</body>
+</html>
